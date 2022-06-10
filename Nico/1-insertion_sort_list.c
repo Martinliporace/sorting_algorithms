@@ -3,38 +3,37 @@
 /**
 * Description -  sorts an array of integers in ascending order using the
 * Bubble sort algorithm
-* @array: list of elements to be sort
-* @size: length of array
-* Return: Always 0
+* @list: list of elements to be sort
+* Return: void
 */
 void insertion_sort_list(listint_t **list)
 {
-    listint_t *head, *i, *j, *temp;
+    listint_t *i, *j;
 
-    i = malloc(sizeof(*list));
-
-    if(i == NULL)
+    if(*list == NULL)
         return;
 
-    head = malloc(sizeof(*list));
+    j = (*list);
 
-    if(head == NULL)
-        return;
-    
-    head->prev = NULL;
-
-    for(i = head; i->next != NULL; i = i->next)
+    while(j)
     {
-        for(j = i->next; j != NULL; j = j->next)
+        i = j->next;
+        while(j->prev && j->n < j->prev->n)
         {
-            while(j->n < i->n && j != NULL)
-            {
-                temp = j;
-                j = i;
-                i = temp;
-                j = j->prev;
-            }
+            j->prev->next = j->next; /*i next a k*/
+            if(j->next)
+                j->next->prev = j->prev; /*k prev a i*/
+            j->next = j->prev;/*j next a i*/
+            j->prev = j->prev->prev; /*j prev a h*/
+            if(j->prev)
+                j->prev->next = j;/*h next a j*/
+            j->next->prev = j; /*i prev a j*/
+            
+            if(!j->prev)
+                *list = j;
+            
             print_list(*list);
         }
+        j = i;
     }
 }
