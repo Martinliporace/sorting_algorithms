@@ -1,40 +1,39 @@
 #include "sort.h"
 
 /**
-* Description -  sorts an array of integers in ascending order using the
-* Bubble sort algorithm
-* @array: list of elements to be sort
-* @size: length of array
-* Return: Always 0
+* insertion_sort_list -  sorts an array of integers in ascending order using
+* the insertion sort algorithm
+* @list: list of elements to be sort
+* Return: void
 */
 void insertion_sort_list(listint_t **list)
 {
-    listint_t *head, *i, *j, *temp;
+	listint_t *i, *j;
 
-    i = malloc(sizeof(*list));
+	if (*list == NULL)
+		return;
 
-    if(i == NULL)
-        return;
+	j = (*list);
 
-    head = malloc(sizeof(*list));
+	while (j)
+	{
+	i = j->next;
+	while (j->prev && j->n < j->prev->n)
+	{
+		j->prev->next = j->next; /*i next a k*/
+		if (j->next)
+		j->next->prev = j->prev; /*k prev a i*/
+		j->next = j->prev;/*j next a i*/
+		j->prev = j->prev->prev; /*j prev a h*/
+		if (j->prev)
+			j->prev->next = j;/*h next a j*/
+			j->next->prev = j; /*i prev a j*/
 
-    if(head == NULL)
-        return;
-    
-    head->prev = NULL;
+		if (!j->prev)
+		*list = j;
 
-    for(i = head; i->next != NULL; i = i->next)
-    {
-        for(j = i->next; j != NULL; j = j->next)
-        {
-            while(j->n < i->n && j != NULL)
-            {
-                temp = j;
-                j = i;
-                i = temp;
-                j = j->prev;
-            }
-            print_list(*list);
-        }
-    }
+		print_list(*list);
+	}
+		j = i;
+	}
 }
