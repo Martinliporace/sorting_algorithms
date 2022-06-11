@@ -26,9 +26,10 @@ void insertion_sort_list(listint_t **list)
 		j->next = j->prev;/*j next a i*/
 		j->prev = j->prev->prev; /*j prev a h*/
 		if (j->prev)
+		{
 			j->prev->next = j;/*h next a j*/
 			j->next->prev = j; /*i prev a j*/
-
+		}
 		if (!j->prev)
 		*list = j;
 
