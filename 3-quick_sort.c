@@ -12,6 +12,8 @@
 
 void quick(int *array, int low, int high, size_t size)
 {
+if (array == NULL || size < 2)
+	return;
 if (low < high)
 	{
 	int pi = lomuto(array, low, high, size);
@@ -32,8 +34,6 @@ if (low < high)
 
 void quick_sort(int *array, size_t size)
 {
-	if (!array)
-		return;
 	quick(array, 0, size - 1, size);
 }
 
@@ -74,12 +74,15 @@ int lomuto(int *array, int izq, int der, size_t size)
 		{
 			i++;
 			swap_array(&array[i], &array[j]);
+			if (array[i] != array[j])
+				print_array(array, size);
 
 		}
 
 	}
 	swap_array(&array[i + 1], &array[der]);
-	print_array(array, size);
+	if (array[++i] != array[der])
+		print_array(array, size);
 
 	return (i);
 }
